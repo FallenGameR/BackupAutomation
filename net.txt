@@ -1,0 +1,1 @@
+net use \\server\share /user:<domain\username> <password>

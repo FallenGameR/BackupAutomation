@@ -1,0 +1,21 @@
+All files from source folder are copied to the destination folder.
+
+/ZB Tries to copy files in restartable mode , but if that fails with an “Access Denied” error, switches automatically to Backup mode.
+
+/MIR Mirrors a directory tree (equivalent to running both /E and /PURGE)
+
+/MON: n Monitors the source directory for changes, and runs again when n changes have been detected, and the minimum time interval specified by /MOT has elapsed.
+
+/MOT: n Monitors the source directory for changes, and runs again when a further n minutes have elapsed, and the minimum number of changes specified by /MON have been detected.  
+
+/RH: hhmm - hhmm Defines th e time slot during which starting new copies is allowed. Useful for restricting copies to certain times of the day. Both values must be 24 - hour times in the range 0000 to 2359.
+
+/PF Makes more frequent checks to see if starting new copies is allowed (per f ile rather than per pass). Useful in stopping copy activity more promptly at the end of the run hours time slot
+
+/TBD Waits for share names to be defined on a “Network Name Not Found” error. 
+
+/ETA Shows estimated time of completion for copied files.
+
+/LOG: file Redirects output to the specified file, overwriting th e file if it already exists.
+
+/TEE Displays output in the console window, in addition to directing it to the log file specified by /LOG or /LOG+.
