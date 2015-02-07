@@ -1,18 +1,42 @@
 $tasks =
 @{
-    Source = "Music"
-    Destination = "Music"
+    Source = "c:\Users\FallenGameR\.vim\"
+    Destination = ".vim"
 },
 @{
-    Source = "Pictures"
-    Destination = "Pictures"
+    Source = "c:\Users\FallenGameR\Desktop\"
+    Destination = "Desktop"
 },
 @{
-    Source = "Documents"
+    Source = "c:\Users\FallenGameR\Documents\"
     Destination = "Documents"
 },
 @{
-    Source = "Archive"
+    Source = "d:\Downloads\"
+    Destination = "Downloads"
+},
+@{
+    Source = "d:\Dropbox\"
+    Destination = "Dropbox"
+},
+@{
+    Source = "d:\OneDrive\"
+    Destination = "OneDrive"
+},
+@{
+    Source = "d:\Pictures\"
+    Destination = "Pictures"
+},
+@{
+    Source = "d:\Music\"
+    Destination = "Music"
+},
+@{
+    Source = "d:\Videos\"
+    Destination = "Videos"
+},
+@{
+    Source = "d:\Archive\"
     Destination = "Archive"
 }
 
