@@ -40,8 +40,8 @@ $tasks =
     Destination = "Archive"
 }
 
-NET USE \\qnap\home\FallenGameR /USER:admin admin
-$destinationRoot = "\\qnap\home\FallenGameR\Bogardan\2015-1st"
+NET USE "\\qnap\home\$env:USERNAME" /USER:admin admin
+$destinationRoot = "\\qnap\home\$env:USERNAME\$env:COMPUTERNAME\2015-1st"
 $creationNeeded = -not (Test-Path $destinationRoot)
 
 foreach( $task in $tasks )
@@ -58,7 +58,7 @@ foreach( $task in $tasks )
         $params += "/ETA"       # Shows estimated time of completion for copied files.
     }
     $params += "/MIR"           # Mirrors a directory tree (equivalent to running both /E and /PURGE)
-    $params += "/ZB"            # Tries to copy files in restartable mode , but if that fails with an “Access Denied” error, switches automatically to Backup mode.
+    $params += "/Z"             # Tries to copy files in restartable mode
     $params += "/LOG+:robocopy.log" # redirects output to the specified file, appending it to the file if it already exists.
     $params += "/TEE"           # Displays output in the console window, in addition to directing it to the log file specified by /LOG or /LOG+.
     robocopy $params
