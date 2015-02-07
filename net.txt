@@ -1,1 +1,3 @@
-net use \\server\share /user:<domain\username> <password>
+NET USE \\remoteserver\IPC$ /USER:userid password ROBOCOPY \\remoteserver\sourcepath\\localserver\destpath 
+... 
+NET USE \\remoteserver\IPC$ /DEL

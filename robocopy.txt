@@ -19,3 +19,5 @@ All files from source folder are copied to the destination folder.
 /LOG: file Redirects output to the specified file, overwriting th e file if it already exists.
 
 /TEE Displays output in the console window, in addition to directing it to the log file specified by /LOG or /LOG+.
+
+Use the /CREATE switch to minimize directory fragmentation when you copy a large tree for the first time. 
