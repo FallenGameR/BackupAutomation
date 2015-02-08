@@ -1,0 +1,78 @@
+each of the following commands copies the files in the same way, including their setting of the attributes of /dest/foo:
+
+    CWrsync -av /src/foo /dest
+    CWrsync -av /src/foo/ /dest/foo
+ -a, --archive               archive mode; equals -rlptgoD (no -H,-A,-X)
+     -r, --recursive             recurse into directories
+     -l, --links                 copy symlinks as symlinks
+     -p, --perms                 preserve permissions
+     -t, --times                 preserve modification times
+     -g, --group                 preserve group
+     -o, --owner                 preserve owner (super-user only)
+     -D                          same as --devices --specials
+         --devices               preserve device files (super-user only)
+         --specials              preserve special files
+ -v, --verbose               increase verbosity
+
+To backup my wife's home directory, which consists of large MS Word files and
+mail folders, I use a cron job that runs each night over a PPP connection to a duplicate directory on my machine lqarvidsjaurrq.
+    CWrsync -Cavz . arvidsjaur:backup
+ -C, --cvs-exclude           auto-ignore files in the same way CVS does
+ -z, --compress              compress file data during the transfer
+
+To synchronize my samba source trees I use the following Makefile targets:
+get: rsync -avuzb --exclude '*~' samba:samba/ .
+put: rsync -Cavuzb . samba:samba/
+ -u, --update                skip files that are newer on the receiver
+ -b, --backup                make backups (see --suffix & --backup-dir)
+
+I mirror a directory between my lqoldrq and lqnewrq ftp sites with the command:
+CWrsync -az -e ssh --delete ~ftp/pub/samba nimbus:"~ftp/pub/tridge" 
+
+ -r, --recursive             recurse into directories
+ -b, --backup                make backups (see --suffix & --backup-dir)
+     --suffix=SUFFIX         backup suffix (default ~ w/o --backup-dir)
+     --inplace               update destination files in-place
+ -L, --copy-links            transform symlink into referent file/dir
+ -t, --times                 preserve modification times
+ -n, --dry-run               perform a trial run with no changes made
+     --delete                delete extraneous files from dest dirs
+     --ignore-errors         delete even if there are I/O errors
+     --force                 force deletion of dirs even if not empty
+     --partial               keep partially transferred files
+     --partial-dir=DIR       put a partially transferred file into DIR
+ -z, --compress              compress file data during the transfer
+     --skip-compress=LIST    skip compressing files with suffix in LIST
+ -h, --human-readable        output numbers in a human-readable format
+     --progress              show progress during transfer
+ -i, --itemize-changes       output a change-summary for all updates
+     --list-only             list the files instead of copying them
+     --bwlimit=KBPS          limit I/O bandwidth; KBytes per second
+
+-v, --verbose
+A single -v will give you information about what files are being transferred and a brief summary at the end. Two -v options will give you information on what files are being skipped and slightly more information at the end. 
+
+--modify-window
+    When comparing two timestamps, rsync treats the timestamps as being equal if they differ by no more than the modify-window value. This is normally 0 (for an exact match), but you may find it useful to set this to a larger value in some situations. In particular, when transferring to or from an MS Windows FAT filesystem (which represents times with a 2-second resolution), --modify-window=1 is useful (allowing times to differ by up to 1 second). 
+
+-R, --relative 
+    CW rsync -avR /foo/bar/baz.c remote:/tmp/
+then a file named /tmp/foo/bar/baz.c would be created on the remote 
+
+-b, --backup
+    With this option, preexisting destination files are renamed as each file is transferred or deleted. You can control where the backup file goes and what (if any) suffix gets appended using the 
+
+--stats
+    This tells rsync to print a verbose set of statistics on the file transfer, allowing you to tell how effective rsync's delta-transfer algorithm is for your data. 
+
+-h, --human-readable
+    Output numbers in a more human-readable format. This makes big numbers output using larger units, with a K, M, or G suffix. If this option was specified once, these units are K (1000), M (1000*1000), and G (1000*1000*1000); if the option is repeated, the units are powers of 1024 instead of 1000. 
+
+--partial
+    By default, rsync will delete any partially transferred file if the transfer is interrupted. In some circumstances it is more desirable to keep partially transferred files. Using the --partial option tells rsync to keep the partial file which should make a subsequent transfer of the rest of the file much faster.
+
+-m, --prune-empty-dirs
+    This option tells the receiving rsync to get rid of empty directories from the file-list, including nested directories that have no non-directory children. This is useful for avoiding the creation of a bunch of useless directories when the sending rsync is recursively scanning a hierarchy of files using include/exclude/filter rules. 
+
+--progress
+    This option tells rsync to print information showing the progress of the transfer. This gives a bored user something to watch. Implies --verbose if it wasn't already specified. 
