@@ -47,27 +47,19 @@ $creationNeeded = -not (Test-Path $destinationRoot)
 foreach( $task in $tasks )
 {
     $params = @()
-    $params += $task.Source
-    $params += Join-Path $destinationRoot $task.Destination
-    if( $creationNeeded )
-    {
-        $params += "/CREATE"    # minimize directory fragmentation when you copy a large tree for the first time.
-    }
-    else
-    {
-        $params += "/ETA"       # Shows estimated time of completion for copied files.
-    }
-    $params += "/MIR"           # Mirrors a directory tree (equivalent to running both /E and /PURGE)
-    $params += "/Z"             # Tries to copy files in restartable mode
-    $params += "/TEE"           # Displays output in the console window, in addition to directing it to the log file specified by /LOG or /LOG+.
-    $params += "/FFT"           # Some third - party operating systems declare that their volumes are NTFS, but only implement FAT - style file times with a 2 - second granularity. When copying to such a destination from a true NTFS volume, file time rounding may occur, along with unnecessary copying of file data in subsequent jobs robocopy $params
-    $params += "/COPY:DT"       # Workaround for '"ERROR 5 (0x00000005) Changing File Attributes ... Access is denied".' problem on Linux based NAS
-    $params += "/XC"            # The source and destination files have identical time stamps but different file sizes. The file is copied; to skip this file, use /XC
-    $params += "/LOG+:robocopy.log" # redirects output to the specified file, appending it to the file if it already exists.
-    robocopy $params
+    $params += "-a" # archive
+    $params += "-v" # verbose
+    $params += "--delete" # delete extraneous files from dest dirs
+    $params += "--ignore-errors" # delete even if there are I/O errors
+    $params += "--force" # force deletion of dirs even if not empty
+    $params += "--human-readable" # output numbers in a human-readable format
+    $params += "--itemize-changes" # output a change-summary for all updates
+    $params += "--modify-window=1" # when transferring to or from an MS Windows FAT filesystem (which represents times with a 2-second resolution), --modify-window=1 is useful (allowing times to differ by up to 1 second).
+    $params += "--stats" # print a verbose set of statistics on the file transfer, allowing you to tell how effective rsync's delta-transfer algorithm is for your data.
+    $params += "--prune-empty-dirs" # tells the receiving rsync to get rid of empty directories from the file-list, including nested directories that have no non-directory children. This is useful for avoiding the creation of a bunch of useless directories when the sending rsync is recursively scanning a hierarchy of files using include/exclude/filter rules.
+    $params += "/cygdrive/" + ($task.Source -replace ":" -replace "\\", "/")
+    $params += ($destinationRoot -replace "\\", "/") + "/" + $task.Destination
+
+    C:\tools\rsync\rsync.exe $params
 }
 
-NET USE \\qnap\home\FallenGameR /DEL
-
-2015/02/06 23:19:56 ERROR 5 (0x00000005) Time-Stamping Destination Directory \\qnap\home\FallenGameR\TACHIKOMA\2015-1st\Documents\My Videos\
-Access is denied.
