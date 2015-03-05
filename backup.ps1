@@ -42,7 +42,6 @@ $tasks =
 
 NET USE "\\qnap\home\$env:USERNAME" /USER:admin admin
 $destinationRoot = "\\qnap\home\$env:USERNAME\$env:COMPUTERNAME\2015-1st"
-$creationNeeded = -not (Test-Path $destinationRoot)
 
 foreach( $task in $tasks )
 {
